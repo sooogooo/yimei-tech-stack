@@ -47,6 +47,77 @@ FAVICON = ('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewB
            '<rect width=%2224%22 height=%2224%22 rx=%225%22 fill=%22%230E6E5F%22/>'
            '<rect x=%228%22 y=%228%22 width=%228%22 height=%228%22 rx=%222%22 fill=%22%23C9A063%22/></svg>')
 
+SCALE = ['#0A4A41', '#0E6E5F', '#2E8A79', '#5FA292', '#93C2B6', '#C6E0D8', '#E7F2EE']
+INKC = '#0A4A41'
+
+
+def _layer(no, name, tag, items, art, bg, fg, gold_edge=False):
+    ge = ' gold-edge' if gold_edge else ''
+    return (f'<details class="layer{ge}" style="background:{bg};color:{fg}">'
+            f'<summary><span class="lno">{escape(no)}</span><span class="ln">{escape(name)}</span>'
+            f'<span class="lt">{escape(tag)}</span><span class="lar">▶</span></summary>'
+            f'<div class="lb">{escape(" · ".join(items))}<br>'
+            f'<a class="go" href="{art[1]}" style="color:inherit;text-decoration:underline">{escape(art[0])} →</a>'
+            '</div></details>')
+
+
+def stackx_html():
+    doctor = [
+        ('L7', '审美沟通层', '产品思维', ['动态审美判断', '概率语言沟通', '预期管理', '与咨询师协作'], ('深读 · 第 01 篇', '01-美容医生的技术栈全景.html')),
+        ('L6', '规范安全层', '工程规范 · 医疗特有', ['适应症与禁忌筛查', '知情同意与病历', '并发症预案', '感控急救'], ('深读 · 第 04 篇', '04-医生的运维，围治疗期管理.html')),
+        ('L5', '评估层', '调试与测试工具', ['皮肤分型', '皮肤镜与影像', '需求轴评估', '面部美学评估'], ('深读 · 第 04 篇', '04-医生的运维，围治疗期管理.html')),
+        ('L4', '材料层', '数据与存储', ['肉毒剂量学', '透明质酸层次与可溶', '再生材料', '外用口服证据'], ('深读 · 第 03 篇', '03-设备与材料，医生栈的两层核心.html')),
+        ('L3', '设备层', '框架与库', ['参数思维', '光电声品类', '注册类别意识'], ('深读 · 第 03 篇', '03-设备与材料，医生栈的两层核心.html')),
+        ('L2', '底层语言层', '编程语言', ['面部解剖', '血管地图', '色素病理', '药理'], ('深读 · 第 02 篇', '02-医生的底层语言是解剖.html')),
+        ('L1', '准入层', '上岗认证', ['执业资格', '主诊医师备案', '急救培训'], ('深读 · 第 01 篇', '01-美容医生的技术栈全景.html')),
+    ]
+    consult = [
+        ('L7', '边界层', '医疗特有', ['不诊断 不处方 不承诺', '宣传合规', '转诊接口'], ('深读 · 第 07 篇', '07-咨询师的边界层，专业性的来源.html')),
+        ('L6', '流程客户层', '项目管理与客户', ['接待到随访', '档案与节点', '复购节奏'], ('深读 · 第 05 篇', '05-医美咨询师的技术栈全景.html')),
+        ('L5', '呈现层', '演示宣讲', ['面诊提问', '案例规范使用', '报告解读'], ('深读 · 第 05 篇', '05-医美咨询师的技术栈全景.html')),
+        ('L4', '方案层', '方案撰写', ['主诉转译', '组合排序', '报价三层'], ('深读 · 第 06 篇', '06-咨询师的方案层，从主诉到报价.html')),
+        ('L3', '项目知识层', '产品知识', ['适应症', '疗程', '恢复期', '禁忌', '维持时间'], ('深读 · 第 05 篇', '05-医美咨询师的技术栈全景.html')),
+        ('L2', '医学常识层', '技术广度', ['皮肤常识', '主诉地图', '转诊信号'], ('深读 · 第 05 篇', '05-医美咨询师的技术栈全景.html')),
+        ('L1', '行业结构层', '行业知识', ['项目分类', '分级常识', '价格体系'], ('深读 · 第 05 篇', '05-医美咨询师的技术栈全景.html')),
+    ]
+    org = [
+        ('S1', '资质系统', '合规与证照', ['执业许可', '诊疗科目', '人员资质档案'], ('深读 · 第 08 篇', '08-医美机构的技术栈全景.html')),
+        ('S2', '人才系统', '团队与梯队', ['岗位配置', '培训演练', '职业路径'], ('深读 · 第 08 篇', '08-医美机构的技术栈全景.html')),
+        ('S3', '设备供应链系统', '基础设施', ['设备组合', '耗材溯源', '注册证核验'], ('深读 · 第 08 篇', '08-医美机构的技术栈全景.html')),
+        ('S4', '诊疗流程系统', '研发流水线', ['面诊到随访 SOP', '知情同意与病历', '序贯排程'], ('深读 · 第 09 篇', '09-机构的流程与安全系统.html')),
+        ('S5', '质量安全系统', '监控与告警 · 医疗特有', ['感控', '急救预案演练', '不良事件闭环'], ('深读 · 第 09 篇', '09-机构的流程与安全系统.html')),
+        ('S6', '客户系统', '用户运营', ['治疗史档案', '随访体系', '长周期资产'], ('深读 · 第 10 篇', '10-机构的经营与客户系统.html')),
+        ('S7', '获客品牌系统', '市场与增长', ['专业科普', '平台合规', '口碑转介绍'], ('深读 · 第 10 篇', '10-机构的经营与客户系统.html')),
+        ('S8', '经营系统', '商业化与财务', ['定价三层', '成本合规', '数据看板'], ('深读 · 第 10 篇', '10-机构的经营与客户系统.html')),
+    ]
+
+    def pane(pid, head, layers, special_idx=()):
+        rows = []
+        for i, (no, name, tag, items, art) in enumerate(layers):
+            gold = i in special_idx
+            if gold and pid == 'pane-consult':
+                bg, fg = '#B4562F', '#FFFFFF'
+            elif gold and pid == 'pane-org':
+                bg, fg = '#C9A063', '#23333D'
+            else:
+                bg = SCALE[min(i, 6)]
+                fg = '#FFFFFF' if i <= 3 else INKC
+            rows.append(_layer(no, name, tag, items, art, bg, fg, gold))
+        return (f'<div class="stackx-pane{" active" if pid == "pane-doc" else ""}" id="{pid}">'
+                f'<h4>{head}</h4>{"".join(rows)}</div>')
+
+    tabs = ('<div class="stackx-tabs">'
+            '<button class="stackx-tab active" data-target="pane-doc">医生 · 七层</button>'
+            '<button class="stackx-tab" data-target="pane-consult">咨询师 · 七层</button>'
+            '<button class="stackx-tab" data-target="pane-org">机构 · 八系统</button></div>')
+    note = ('<p class="stackx-note">点开任意一层查看该层的最小能力集合，金色与陶土色描边是医疗属性多出的层，'
+            '层内链接直达对应篇目深读。</p>')
+    return ('<div class="stackx">' + tabs + note
+            + pane('pane-doc', '美容医生 · 对标 IT 工程师 · 纵深型', doctor, special_idx=(1,))
+            + pane('pane-consult', '医美咨询师 · 对标售前顾问 SC · 广度型', consult, special_idx=(0,))
+            + pane('pane-org', '医美机构 · 对标工程组织 · 系统型', org, special_idx=(4,))
+            + '</div>')
+
 
 def inline(s):
     s = escape(s, quote=False)
@@ -70,6 +141,10 @@ def render_table(rows):
     return '<table>' + ''.join(body) + '</table>'
 
 
+def slugify(t):
+    return re.sub(r'\s+', '', t)
+
+
 def md_to_html(lines):
     out, i, appendix = [], 0, False
     while i < len(lines):
@@ -84,12 +159,13 @@ def md_to_html(lines):
         m = re.match(r'^(#{1,3})\s+(.*)', s)
         if m:
             lvl, txt = len(m.group(1)), m.group(2).strip()
+            sid = f' id="{escape(slugify(txt), quote=True)}"' if lvl == 2 else ''
             if lvl == 2 and txt.startswith('附'):
                 if out and out[-1] == '<hr>':
                     out.pop()
                 out.append('<div class="appendix">')
                 appendix = True
-            out.append(f'<h{lvl}>{inline(txt)}</h{lvl}>')
+            out.append(f'<h{lvl}{sid}>{inline(txt)}</h{lvl}>')
             i += 1
             continue
         if s.startswith('|'):
@@ -166,7 +242,9 @@ def parse_doc(path):
         rest.pop(0)
     plain = re.sub(r'[#*>|!\[\]()`*-]', '', '\n'.join(rest))
     minutes = max(1, round(len(re.sub(r'\s', '', plain)) / 480))
-    return title, cover, meta, rest, minutes
+    secs = [re.match(r'^##\s+(.+)$', l.strip()).group(1).strip()
+            for l in rest if re.match(r'^##\s+', l.strip())]
+    return title, cover, meta, rest, minutes, secs
 
 
 def head_html(title):
@@ -174,7 +252,8 @@ def head_html(title):
             '<meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<title>{escape(title)} · 医美技术栈</title>'
             f'<link rel="icon" href="{FAVICON}">'
-            '<link rel="stylesheet" href="assets/style.css"></head><body>')
+            '<link rel="stylesheet" href="assets/style.css">'
+            '<script src="assets/site.js" defer></script></head><body>')
 
 
 def site_head():
@@ -220,11 +299,11 @@ def main():
     parsed = {}
     files = {}
     for num, path in DOCS:
-        title, cover, meta, rest, minutes = parse_doc(path)
+        title, cover, meta, rest, minutes, secs = parse_doc(path)
         body = md_to_html(rest)
         slugname = path.stem + '.html'
         parsed[num] = dict(title=title, cover=cover, meta=meta, body=body,
-                           minutes=minutes, slug=slugname)
+                           minutes=minutes, slug=slugname, secs=secs)
         files[num] = slugname
 
     order = [n for n, _ in DOCS]
@@ -239,9 +318,18 @@ def main():
         pn += pn_card('上一篇', parsed[prev_n]['title'], files[prev_n]) if prev_n else pn_card('系列起点', '', None)
         pn += pn_card('下一篇', parsed[next_n]['title'], files[next_n], 'next') if next_n else pn_card('系列完 · 感谢阅读', '', None, 'next')
         pn += '</div>'
+        rail = ''
+        if len(secs) > 1:
+            lis = ''.join(
+                f'<li><a href="#{escape(slugify(s), quote=True)}">{escape(s)}</a></li>' for s in secs)
+            rail = (f'<aside class="toc-rail"><div class="rail-card"><div class="rail-t">本篇目录</div>'
+                    f'<ul>{lis}</ul></div></aside>')
         html = [
             head_html(d['title']),
+            '<div class="progress-bar"></div>',
             site_head(),
+            '<div class="article-wrap">',
+            rail,
             '<main class="article">',
             '<div class="crumbs"><a href="index.html">首页</a> / ' + escape(cat) + '</div>',
             f'<span class="chip{chip_cls}">{chip}</span>',
@@ -251,6 +339,7 @@ def main():
             '\n'.join(d['body']),
             pn,
             '</main>',
+            '</div>',
             site_foot(),
         ]
         (HERE / files[num]).write_text('\n'.join(html), encoding='utf-8')
@@ -281,10 +370,13 @@ def main():
         '对标 IT 行业最成熟的栈图体例。专业一旦成为可核对、可学习、可升级的清单，就不再依赖形容词。</p>',
         '<div class="hero-actions"><a class="btn btn-primary" href="00-系列总览.html">从系列总览读起</a>'
         '<a class="btn btn-ghost" href="#mulu">查看全部篇目</a></div>',
+        '<div class="hero-stack"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>',
         '<div class="hero-fig"><img src="配图/fig-00-三栈总览.svg" alt="三张技术栈总览"></div>',
         '</div></div>',
         '<div class="wrap">',
         '<div class="pillars" id="zhuti">' + pillars + '</div>',
+        '<section class="section" id="stackx"><div class="section-title">三栈浏览器</div>'
+        + stackx_html() + '</section>',
         '<section class="section" id="mulu"><div class="section-title">全部篇目</div>'
         '<div class="toc">' + ''.join(toc_rows) + '</div></section>',
         '<section class="section" id="guanyu"><div class="about">'

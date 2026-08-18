@@ -186,8 +186,14 @@ def site_head():
 
 def site_foot():
     return ('<footer class="site-foot"><div class="wrap">'
-            '<span>医美技术栈 · B 端系列 · 对标 IT 工程师与 SC 售前顾问的栈图体例</span>'
-            '<span>事实核验 2026-08-18</span></div></footer></body></html>')
+            '<div class="foot-main"><span>医美技术栈 · B 端系列 · 对标 IT 工程师与 SC 售前顾问的栈图体例</span>'
+            '<span>事实核验 2026-08-18</span></div>'
+            '<div class="foot-author"><span class="a-name">作者 sooogooo</span>'
+            '<a href="mailto:sooogooo@gmail.com">sooogooo@gmail.com</a><span class="sep">|</span>'
+            '<span>微信 @sooogooo</span><span class="sep">|</span>'
+            '<a href="https://x.com/sooogooo" target="_blank" rel="noopener">X @sooogooo</a><span class="sep">|</span>'
+            '<a href="https://facebook.com/sooogooo" target="_blank" rel="noopener">Facebook @sooogooo</a>'
+            '</div></div></footer></body></html>')
 
 
 def pn_card(lab, title, href, cls=''):
@@ -286,7 +292,10 @@ def main():
         '<p>医生对标 IT 工程师，咨询师对标售前顾问 SC，机构对标工程组织。同构带来体例，分野来自医疗属性，'
         '多出来的规范安全层、边界层与质量安全系统，正是这个行业专业性的制度表达。'
         '论证只用五类可核验信息，即法规与资质、临床证据与共识、并发症数据、价格量级与监管类别。</p>'
-        '<p class="fine">三张全景图（图 1、图 5、图 8）可独立用于招聘核对与培训材料。'
+        '<p class="fine">作者 <b>sooogooo</b> · <a href="mailto:sooogooo@gmail.com">sooogooo@gmail.com</a> · 微信 @sooogooo · '
+        '<a href="https://x.com/sooogooo" target="_blank" rel="noopener">X @sooogooo</a> · '
+        '<a href="https://facebook.com/sooogooo" target="_blank" rel="noopener">Facebook @sooogooo</a><br>'
+        '三张全景图（图 1、图 5、图 8）可独立用于招聘核对与培训材料。'
         '文中法规与价格信息核验至 <b>2026 年 8 月 18 日</b>，发布前逐条复核。本文刊内容不构成医疗与投资建议。</p>'
         '</div></section>',
         '</div>',
@@ -301,7 +310,7 @@ def main():
         text = htmlf.read_text(encoding='utf-8')
         for m in re.finditer(r'(?:href|src)="([^"#]+)"', text):
             u = m.group(1)
-            if u.startswith(('http', 'data:')):
+            if u.startswith(('http', 'data:', 'mailto:', 'tel:')):
                 continue
             if not (htmlf.parent / u).exists():
                 bad.append(f'{htmlf.name} -> {u}')

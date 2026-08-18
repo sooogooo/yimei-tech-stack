@@ -188,7 +188,7 @@ def site_foot():
     return ('<footer class="site-foot"><div class="wrap">'
             '<div class="foot-main"><span>医美技术栈 · B 端系列 · 对标 IT 工程师与 SC 售前顾问的栈图体例</span>'
             '<span>事实核验 2026-08-18</span></div>'
-            '<div class="foot-author"><span class="a-name">作者 sooogooo</span>'
+            '<div class="foot-author"><span class="a-name">作者 sooogooo</span><span class="sep">|</span>'
             '<a href="mailto:sooogooo@gmail.com">sooogooo@gmail.com</a><span class="sep">|</span>'
             '<span>微信 @sooogooo</span><span class="sep">|</span>'
             '<a href="https://x.com/sooogooo" target="_blank" rel="noopener">X @sooogooo</a><span class="sep">|</span>'
